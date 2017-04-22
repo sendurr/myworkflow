@@ -2,12 +2,12 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var userSchema = new Schema({
-  id:  {type:String, index:true},
+  id:  {type: Number, index: true},
   first_name: String,
   last_name: String,
-  role_id: Number,
+  role_id: {type: Number, index: true},
   role: String,
-  department_id: Number,
+  department_id: {type: Number, index: true},
   department: String,
   updated: { type: Date, default: Date.now },
   created: { type: Date, default: Date.now },
