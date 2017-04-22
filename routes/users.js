@@ -9,7 +9,6 @@ router.get('/', function(req, res) {
             res.status(500).send(err);
         res.status(200).json({comment:users.length + " users retrieved.",data:users});
     });
-    //res.json({ message: 'List of users' });
 });
 
 router.post('/', function(req, res) {
@@ -19,6 +18,17 @@ router.post('/', function(req, res) {
         if(err)
             res(500).send(err);
         res.status(200).json({comment:'User created!',data:data});
+    });
+});
+
+router.get('/:user_id', function(req, res) {
+    User.find({'id': req.params.user_id},function (err, user) {
+        if(err)
+            res.status(500).send(err);
+        else if(!user)
+            res.status(200).json({comment:"No user found.",data:user});
+        else
+            res.status(200).json({comment:"user found.",data:user});
     });
 });
 
