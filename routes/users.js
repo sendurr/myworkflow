@@ -6,10 +6,10 @@ var User = require('../models/user_model').user;
 router.get('/', function(req, res) {
     User.find(function (err, users) {
         if(err)
-            res(500).send(err);
-        res.json({comment:'User created!',data:users});
+            res.status(500).send(err);
+        res.status(200).json({comment:users.length + " users retrieved.",data:users});
     });
-    res.json({ message: 'List of users' });
+    //res.json({ message: 'List of users' });
 });
 
 router.post('/', function(req, res) {
@@ -18,7 +18,7 @@ router.post('/', function(req, res) {
     user.save(function(err){
         if(err)
             res(500).send(err);
-        res.json({comment:'User created!',data:data});
+        res.status(200).json({comment:'User created!',data:data});
     });
 });
 
