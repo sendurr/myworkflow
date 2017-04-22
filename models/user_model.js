@@ -11,7 +11,8 @@ var userSchema = new Schema({
   department: String,
   updated: { type: Date, default: Date.now },
   created: { type: Date, default: Date.now },
-  dob: { type: Date}
+  dob: { type: Date},
+  mobile: Number
 });
 
-module.exports.userSchema = userSchema;
+module.exports.user = mongoose.model("user",userSchema);
