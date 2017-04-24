@@ -24,7 +24,13 @@ var jwtCheck = jwt({
     algorithms: ['RS256']
 });
 
-app.use(jwtCheck);
+//app.use(jwtCheck);
+// return error message for unauthorized requests
+app.use(jwtCheck,function (err, req, res, next) {
+    if (err.name === 'UnauthorizedError') {
+        res.status(401).json({message:'Missing or invalid token'});
+    }
+});
 
 // configure app to use bodyParser()
 // this will let `us get the data from a POST
@@ -46,7 +52,6 @@ var users = require('./routes/users');
 // REGISTER OUR ROUTES
 // ============================================================================
 app.use('/', index);
-app.use('/users', users);
 app.use('/users', users);
 
 // START THE SERVER
