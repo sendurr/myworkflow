@@ -4,50 +4,34 @@ var User = require('../models/user_model').user;
 
 
 var checkPermissions = function(req, res, next){
+    var permissions = [];
     switch(req.method){
         case 'POST':{
-            var permissions = ['create:users'];
-            for(var i = 0; i < permissions.length; i++){
-                if(req.user.scope.includes(permissions[i])){
-                    continue;
-                } else {
-                    res.status(403).send({message:'Forbidden - access denied'});
-                }
-            }
+            //var permissions = ['create:users'];
+            permissions.push('create:users');
             break;
         }
         case 'GET':{
-            var permissions = ['read:users'];
-            for(var i = 0; i < permissions.length; i++){
-                if(req.user.scope.includes(permissions[i])){
-                    continue;
-                } else {
-                    res.status(403).send({message:'Forbidden - access denied'});
-                }
-            }
+            //var permissions = ['read:users'];
+            permissions.push('read:users');
             break;
         }
         case 'PUT':{
-            var permissions = ['update:users'];
-            for(var i = 0; i < permissions.length; i++){
-                if(req.user.scope.includes(permissions[i])){
-                    continue;
-                } else {
-                    res.status(403).send({message:'Forbidden - access denied'});
-                }
-            }
+            //var permissions = ['update:users'];
+            permissions.push('update:users');
             break;
         }
         case 'DELTE':{
-            var permissions = ['delete:users'];
-            for(var i = 0; i < permissions.length; i++){
-                if(req.user.scope.includes(permissions[i])){
-                    continue;
-                } else {
-                    res.status(403).send({message:'Forbidden - access denied'});
-                }
-            }
+            //var permissions = ['delete:users'];
+            permissions.push('update:users');
             break;
+        }
+    }
+    for(var i = 0; i < permissions.length; i++){
+        if(req.user.scope.includes(permissions[i])){
+            continue;
+        } else {
+            res.status(403).send({message:'Forbidden - access denied'});
         }
     }
 };
