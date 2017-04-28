@@ -1,19 +1,24 @@
-var assert = require('assert');
-var expected, current;
-before(function(){
-    expected = ['a', 'b', 'c'];
-})
-describe('String#split', function(){
-    beforeEach(function(){
-        current = 'a,b,c'.split(',');
-    })
-    it('should return an array', function(){
-        assert(Array.isArray(current));
+//During the test the env variable is set to test
+process.env.NODE_ENV = 'test';
+
+//Require the dev-dependencies
+var chai = require('chai');
+var chaiHttp = require('chai-http');
+var server = require('../server');
+var should = chai.should();
+
+chai.use(chaiHttp);
+//Our parent block
+
+
+describe('/GET Users',function() {
+    it('should list ALL users on /users GET', function(done) {
+        chai.request(server)
+            .get('/users')
+            .end(function(err, res){
+                res.should.have.status(200);
+                done();
+            });
     });
-    it('should return the same array', function(){
-        assert.equal(expected.length, current.length, 'arrays have equal length');
-        for (var i=0; i<expected.length; i++) {
-            assert.equal(expected[i], current[i], i + 'element is equal');
-        }
-    });
-})
+});
+
