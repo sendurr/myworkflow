@@ -26,11 +26,13 @@ var jwtCheck = jwt({
 
 //app.use(jwtCheck);
 // return error message for unauthorized requests
-app.use(jwtCheck,function (err, req, res, next) {
-    if (err.name === 'UnauthorizedError') {
-        res.status(401).json({message:'Missing or invalid token'});
-    }
-});
+if(process.env.NODE_ENV != 'test'){
+    app.use(jwtCheck,function (err, req, res, next) {
+        if (err.name === 'UnauthorizedError') {
+            res.status(401).json({message:'Missing or invalid token'});
+        }
+    });
+}
 
 // configure app to use bodyParser()
 // this will let `us get the data from a POST
@@ -58,3 +60,5 @@ app.use('/users', users);
 // =============================================================================
 app.listen(port);
 console.log('Magic happens on port ' + port);
+
+module.exports = app;
