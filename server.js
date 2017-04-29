@@ -58,7 +58,7 @@ app.use('/users', users);
 
 // START THE SERVER
 // =============================================================================
-app.listen(port);
+var server = app.listen(port);
 console.log('Magic happens on port ' + port);
 
-module.exports = app;
+module.exports.server = server;

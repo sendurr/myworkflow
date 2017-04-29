@@ -20,7 +20,7 @@ process.env.NODE_ENV = 'test';
 //Require the dev-dependencies
 var chai = require('chai');
 var chaiHttp = require('chai-http');
-var server = require('../server');
+var server = require('../server').server;
 var should = chai.should();
 
 chai.use(chaiHttp);
@@ -28,9 +28,28 @@ chai.use(chaiHttp);
 
 
 describe('/GET Users',function() {
+    var user_id=99;
+    before(function () {
+        var user_id=99;
+    });
+
+    after(function (done) {
+        server.close();
+        done();
+    });
+
     it('should list ALL users on /users GET', function(done) {
-        chai.request(server)
+        chai.request(server.listen())
             .get('/users')
+            .end(function(err, res){
+                res.should.have.status(200);
+                done();
+            });
+    });
+
+    it('should get user with id 99 on /users/:user_id GET', function(done) {
+        chai.request(server.listen())
+            .get('/users/'+ user_id)
             .end(function(err, res){
                 res.should.have.status(200);
                 done();
